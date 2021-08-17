@@ -1,6 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
+
+import Card from "../components/Card"
+
 import Header from '../components/Navbar'
+
+type Grant = {
+  name: String,
+  shortDescription: String,
+  longDescription: String,
+  dateCreated: Number,
+  imgSrc: String
+}
+
+const Grants: Grant[] = [
+  {
+    name: "Cool Grant",
+    shortDescription: "It's cool",
+    longDescription: "blah blah blah",
+    dateCreated: 1629171140,
+    imgSrc: "/images/logo.png"
+  }
+];
 
 export default function Home() {
   return (
@@ -37,6 +58,12 @@ export default function Home() {
           <button className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-3 rounded-lg font-bold">
             Search
           </button>
+        </div>
+
+        <div className="p-4 mb-4">
+          {Grants.map(({ name, shortDescription, imgSrc, dateCreated }, idx) => (
+            <Card title={name} image={imgSrc} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
+          ))}
         </div>
       </div>
     </div>

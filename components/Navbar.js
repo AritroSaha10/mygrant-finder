@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-import Logo from "../images/logo.png";
+import Logo from "../public/images/logo.png";
 
 import { GoThreeBars } from "react-icons/go"
 
