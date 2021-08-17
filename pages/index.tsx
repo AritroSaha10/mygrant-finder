@@ -38,7 +38,21 @@ export default function Home() {
     <div className="bg-gray-50">
       <Head>
         <title>MyGrant | Finder</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="Search through a large choice of grants using the MyGrant Finder!" />
+        <link rel="icon" href="/favicon.ico" />
+
+        <meta property="og:title" content="MyGrant | Finder"/>
+        <meta property="og:description" content="Search through a large choice of grants using the MyGrant Finder!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/images/logo.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="287" />
+        <meta property="og:image:height" content="91" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="MyGrant | Finder" />
+        <meta property="twitter:description" content="Search through a large choice of grants using the MyGrant Finder!" />
+        <meta property="twitter:image:src" content="/images/logo.png" />
       </Head>
 
       <Header />
