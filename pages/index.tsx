@@ -1,7 +1,7 @@
 import Head from 'next/head'
+import { useState } from 'react'
 
 import Card from "../components/Card"
-
 import Header from '../components/Navbar'
 import Footer from "../components/Footer"
 
@@ -9,6 +9,7 @@ type Grant = {
   name: String,
   shortDescription: String,
   longDescription: String,
+  keywords: String[],
   dateCreated: Number,
   imgSrc: String
 }
@@ -18,12 +19,21 @@ const Grants: Grant[] = [
     name: "Cool Grant",
     shortDescription: "It's cool",
     longDescription: "blah blah blah",
+    keywords: [
+      "cool",
+      "grant"
+    ],
     dateCreated: 1629171140,
     imgSrc: "/images/logo.png"
   }
 ];
 
 export default function Home() {
+  const [search, setSearch] = useState("");
+  const grantsFiltered = Grants.filter(
+    ({ name }) => name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  );
+
   return (
     <div className="bg-gray-50">
       <Head>
@@ -52,18 +62,31 @@ export default function Home() {
               type="text"
               placeholder="Ex. covid"
               id="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
+          {/*
           <button className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-3 rounded-lg font-bold">
             Search
           </button>
+          */}
         </div>
 
         <div className="p-4 mb-4">
-          {Grants.map(({ name, shortDescription, imgSrc, dateCreated }, idx) => (
+          { /* Shows cards */}
+          {grantsFiltered.map(({ name, shortDescription, imgSrc, dateCreated }, idx) => (
             <Card title={name} image={imgSrc} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
           ))}
+
+          {/* Fallback if no search results */}
+          {!grantsFiltered.length &&
+            <div>
+              <h1 className="text-2xl font-bold text-center mt-4">No search results found</h1>
+              <p className="text-lg text-center my-2">Try adjusting your search to find what you&apos;re looking for.</p>
+            </div>
+          }
         </div>
       </div>
 
