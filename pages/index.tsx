@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
 
 import Card from "../components/Card"
 
 import Header from '../components/Navbar'
+import Footer from "../components/Footer"
 
 type Grant = {
   name: String,
@@ -25,7 +25,7 @@ const Grants: Grant[] = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen min-w-screen bg-gray-50">
+    <div className="bg-gray-50">
       <Head>
         <title>MyGrant | Finder</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -33,7 +33,7 @@ export default function Home() {
 
       <Header />
 
-      <div className="flex flex-col gap-4 p-10 w-full">
+      <div className="flex flex-col gap-4 p-10 min-h-screen min-w-screen">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl text-black font-bold text-center">Grant Search</h1>
           <p className="text-md text-gray-600 text-center">Search through a large choice of grants using our tools!</p>
@@ -66,6 +66,8 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }
