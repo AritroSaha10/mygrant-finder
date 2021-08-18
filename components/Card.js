@@ -7,7 +7,7 @@ export default function Card({ title, image, subtitle, dateCreated, href }) {
     const dateCreatedPreparedString = dayjs(dateCreated).format("DD/MM/YYYY");
 
     return (
-        <div className="flex flex-col md:flex-row md:justify-start gap-4 ring-2 ring-gray-100 rounded-lg bg-gray-200 p-2 lg:p-6 duration-300">
+        <div className="flex flex-col md:flex-row md:justify-start gap-4 rounded-lg bg-gray-200 p-2 lg:p-6 duration-300">
             <Image src={image} className="rounded-lg z-10" alt={title} objectFit="cover" objectPosition="center" width={150} height={150} />
             <div className="flex flex-col items-center md:items-start gap-2 lg:gap-4 w-full">
                 <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between w-full items-center gap-1 lg:gap-2">
