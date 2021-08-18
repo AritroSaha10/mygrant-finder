@@ -10,7 +10,7 @@ module.exports = async function getGrantInfo(id) {
     const directory = path.join(process.cwd(), "data/grants");
 
     // Get specific file path
-    const filePath = path.join(directory, id);
+    const filePath = path.join(directory, `${id}.json`);
 
     // Read contents
     const fileContents = await fs.readFile(filePath, 'utf8');

@@ -19,7 +19,7 @@ const links = [
     }
 ];
 
-export default function Header() {
+export default function Navbar() {
     const [showDropdown, setShowDropdown] = useState(false);
 
     return (

@@ -1,22 +1,26 @@
 import { connectStateResults } from "react-instantsearch-core";
 import Card from "../../components/Card";
 
+import Grant from "../GrantType";
+
 function Results({ searchState, searchResults }) {
-    console.log(searchResults);
+    const results: Grant[] | null = searchResults ? searchResults.hits : null; // If search results exists, get the results. Otherwise, null
 
     return (
         <div className="p-4 mb-4">
-            <div className="flex flex-col gap-2">
-                {searchResults ?
-
-                    (searchResults.hits.length ? searchResults.hits.map(({ name, shortDescription, img, dateCreated }, idx) => (
-                        <Card title={name} image={img} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
+            <div className="flex flex-col gap-4">
+                {results ?
+                    // Results is not null, show results if any
+                    (results.length ? results.map(({ name, shortDescription, img, dateCreated }, idx: Number) => (
+                        <Card title={name} image={img} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx.toString()} />
                     )) :
+                    // No results found
                         <div>
                             <h1 className="text-2xl font-bold text-center mt-4">No search results found</h1>
                             <p className="text-lg text-center my-2">Try adjusting your search to find what you&apos;re looking for.</p>
                         </div>
                     ) :
+                    // Still waiting for Algolia response
                     <div>
                         <h1 className="text-2xl font-bold text-center mt-4">Loading...</h1>
                         <p className="text-lg text-center my-2">Please wait...</p>
