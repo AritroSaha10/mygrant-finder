@@ -1,10 +1,11 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import React, { useState } from "react"
 
 import Card from "../components/Card"
 import Header from '../components/Navbar'
 import Footer from "../components/Footer"
 
+/*
 type Grant = {
   name: String,
   shortDescription: String,
@@ -13,8 +14,9 @@ type Grant = {
   dateCreated: Number,
   imgSrc: String
 }
+*/
 
-const Grants: Grant[] = [
+const Grants /*: Grant[] */ = [
   {
     name: "Cool Grant",
     shortDescription: "It's cool",
