@@ -2,7 +2,7 @@
  * Build the Algolia search index using the data folder
 */
 
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
 // IIFE to use await
 (async function() {
