@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+publish_mode: editorial_workflow
+
+# Media
+public_folder: "/images/uploads" # The src attribute for uploaded media will begin with /images/uploads
+media_folder: "public/images/uploads" # Media files will be stored in the repo under images/uploads
+
+collections:
+  - name: "grant" # Used in routes, e.g., /admin/collections/blog
+    label: "Grants" # Used in the UI
+    label_singular: "Grants" # Used in the UI
+    folder: "data/grants" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    format: json # The format of the documents in this collection
+    slug: "{{slug}}-{{year}}" # Filename template
+    fields: # The fields for each document, usually in front matter
+      - { label: "Name", name: "title", widget: "string" }
+      - { label: "Date Created", name: "dateCreated", widget: "datetime" }
+      - { label: "Featured Image", name: "img", widget: "image" }
+      - {
+          label: "Keywords",
+          name: "keywords",
+          widget: "list",
+          field: { label: "Keyword", name: "keyword", widget: "string" },
+        }
+      - { label: "Short Description", name: "shortDescription", widget: "string" }
+      - { label: "Long Description", name: "longDescription", widget: "markdown" }
