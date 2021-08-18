@@ -1,7 +1,9 @@
 # MyGrant: Finder
-A finder app for the MyGrant website. This uses a CSV and allows users to search it.
+A finder app for the MyGrant website.
 
 # Technology Used
 - Next.js
 - React
-- Tailwind CSS
+- Tailwind CSS (Styling)
+- Netlify CMS (Headless CMS)
+- Netlify (Hosting)
