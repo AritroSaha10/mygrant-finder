@@ -1,0 +1,17 @@
+@layer components {
+    .markdown {
+        @apply flex flex-col gap-2 whitespace-pre-line;
+    }
+    
+    .markdown a {
+        @apply text-blue-500 hover:text-blue-700 duration-100;
+    }
+    
+    .markdown ul {
+        @apply list-disc list-inside ml-2 text-left;
+    }
+
+    .markdown ul li {
+        @apply m-0;
+    }
+}

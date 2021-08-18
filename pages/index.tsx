@@ -15,7 +15,7 @@ import Layout from "../components/Layout";
 
 export default function Home() {
   return (
-    <Layout name="">
+    <Layout name="Finder">
       <div className="flex flex-col gap-4 p-10 min-h-screen min-w-screen">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl text-black font-bold text-center">Grant Search</h1>

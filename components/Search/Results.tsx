@@ -11,10 +11,17 @@ function Results({ searchState, searchResults }) {
             <div className="flex flex-col gap-4">
                 {results ?
                     // Results is not null, show results if any
-                    (results.length ? results.map(({ name, shortDescription, img, dateCreated }, idx: Number) => (
-                        <Card title={name} image={img} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx.toString()} />
+                    (results.length ? results.map(({ name, shortDescription, img, dateCreated, objectID }, idx: Number) => (
+                        <Card 
+                            title={name} 
+                            image={img} 
+                            subtitle={shortDescription} 
+                            dateCreated={dateCreated} 
+                            href={`/grants/${objectID}`} 
+                            key={idx.toString()} 
+                        />
                     )) :
-                    // No results found
+                        // No results found
                         <div>
                             <h1 className="text-2xl font-bold text-center mt-4">No search results found</h1>
                             <p className="text-lg text-center my-2">Try adjusting your search to find what you&apos;re looking for.</p>
