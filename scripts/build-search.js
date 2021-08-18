@@ -10,10 +10,13 @@ const getAllGrants = require("../util/getAllGrants");
 const getGrantInfo = require("../util/getGrantInfo");
 
 async function getAllGrantData() {
+    // Get all of the grant IDs
     const grantsIDs = await getAllGrants();
+
+    // Get all of their info
     const allGrantsInfo = grantsIDs.map(
         async (id) => ({
-            ...(await getGrantInfo(`${id}.json`)),
+            ...(await getGrantInfo(id)),
             objectID: id // Important for algolia
         })
     );
@@ -27,6 +30,8 @@ async function getAllGrantData() {
     dotenv.config();
 
     try {
+        console.log("Pushing grant data to Algolia...");
+
         // Fetch data
         const allGrants = await getAllGrantData();
         
@@ -46,6 +51,6 @@ async function getAllGrantData() {
             )}`,
         );
     } catch (e) {
-        console.log(e)
+        console.log("Error when pushing grant data to Algolia: ", e);
     }
 })();
