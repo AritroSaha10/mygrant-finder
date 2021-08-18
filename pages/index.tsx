@@ -1,38 +1,45 @@
 import Head from 'next/head'
+import { GetStaticProps } from 'next';
 import React, { useState } from "react"
 
 import Card from "../components/Card"
 import Header from '../components/Navbar'
 import Footer from "../components/Footer"
 
-/*
+import getAllGrants from "../util/getAllGrants";
+import getGrantInfo from "../util/getGrantInfo";
+
 type Grant = {
   name: String,
   shortDescription: String,
   longDescription: String,
   keywords: String[],
-  dateCreated: Number,
-  imgSrc: String
+  dateCreated: String,
+  img: String,
+  objectID: String
 }
-*/
 
-const Grants /*: Grant[] */ = [
-  {
-    name: "Cool Grant",
-    shortDescription: "It's cool",
-    longDescription: "blah blah blah",
-    keywords: [
-      "cool",
-      "grant"
-    ],
-    dateCreated: 1629171140,
-    imgSrc: "/images/logo.png"
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const grantsIDs = await getAllGrants();
+  const allGrantsInfo: Grant[] = await Promise.all(grantsIDs.map(
+    async (id) => ({
+      ...(await getGrantInfo(`${id}.json`)),
+      objectID: id
+    })
+  ));
+
+  return {
+    props: {
+      grants: allGrantsInfo
+    }
   }
-];
+}
 
-export default function Home() {
+
+export default function Home({ grants }) {
   const [search, setSearch] = useState("");
-  const grantsFiltered = Grants.filter(
+  const grantsFiltered: Grant[] = grants.filter(
     ({ name }) => name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
   );
 
@@ -43,7 +50,7 @@ export default function Home() {
         <meta name="description" content="Search through a large choice of grants using the MyGrant Finder!" />
         <link rel="icon" href="/favicon.ico" />
 
-        <meta property="og:title" content="MyGrant | Finder"/>
+        <meta property="og:title" content="MyGrant | Finder" />
         <meta property="og:description" content="Search through a large choice of grants using the MyGrant Finder!" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/images/logo.png" />
@@ -92,8 +99,8 @@ export default function Home() {
 
         <div className="p-4 mb-4">
           { /* Shows cards */}
-          {grantsFiltered.map(({ name, shortDescription, imgSrc, dateCreated }, idx) => (
-            <Card title={name} image={imgSrc} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
+          {grantsFiltered.map(({ name, shortDescription, img, dateCreated }, idx) => (
+            <Card title={name} image={img} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
           ))}
 
           {/* Fallback if no search results */}

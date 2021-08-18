@@ -4,7 +4,7 @@ import Link from 'next/link'
 import dayjs from 'dayjs';
 
 export default function Card({ title, image, subtitle, dateCreated, href }) {
-    const dateCreatedPreparedString = dayjs(dateCreated * 1000).format("DD/MM/YYYY");
+    const dateCreatedPreparedString = dayjs(dateCreated).format("DD/MM/YYYY");
 
     return (
         <div className="flex flex-col md:flex-row md:justify-start gap-4 ring-2 ring-gray-100 rounded-lg bg-gray-200 p-2 lg:p-6 duration-300">
