@@ -9,6 +9,8 @@ import Footer from "../components/Footer"
 import getAllGrants from "../util/getAllGrants";
 import getGrantInfo from "../util/getGrantInfo";
 
+import SearchArea from "../components/Search";
+
 type Grant = {
   name: String,
   shortDescription: String,
@@ -19,30 +21,7 @@ type Grant = {
   objectID: String
 }
 
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const grantsIDs = await getAllGrants();
-  const allGrantsInfo: Grant[] = await Promise.all(grantsIDs.map(
-    async (id) => ({
-      ...(await getGrantInfo(`${id}.json`)),
-      objectID: id
-    })
-  ));
-
-  return {
-    props: {
-      grants: allGrantsInfo
-    }
-  }
-}
-
-
-export default function Home({ grants }) {
-  const [search, setSearch] = useState("");
-  const grantsFiltered: Grant[] = grants.filter(
-    ({ name }) => name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  );
-
+export default function Home() {
   return (
     <div className="bg-gray-50">
       <Head>
@@ -72,46 +51,10 @@ export default function Home({ grants }) {
           <p className="text-md text-gray-600 text-center">Search through a large choice of grants using our tools!</p>
         </div>
 
-        <div className="flex self-center items-end gap-2 w-full md:w-2/3 lg:w-1/2">
-          <div className="flex flex-col gap-1 flex-grow">
-            <label htmlFor="search">
-              <p className="text-sm text-gray-500 font-semibold">
-                Your keywords
-              </p>
-            </label>
-
-            <input
-              className="bg-gray-200 appearance-none outline-none px-4 py-1 rounded focus:ring focus:bg-gray-300 duration-75 w-full"
-              type="text"
-              placeholder="Ex. covid"
-              id="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-
-          {/*
-          <button className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-3 rounded-lg font-bold">
-            Search
-          </button>
-          */}
-        </div>
-
-        <div className="p-4 mb-4">
-          { /* Shows cards */}
-          {grantsFiltered.map(({ name, shortDescription, img, dateCreated }, idx) => (
-            <Card title={name} image={img} subtitle={shortDescription} dateCreated={dateCreated} href="/" key={idx} />
-          ))}
-
-          {/* Fallback if no search results */}
-          {!grantsFiltered.length &&
-            <div>
-              <h1 className="text-2xl font-bold text-center mt-4">No search results found</h1>
-              <p className="text-lg text-center my-2">Try adjusting your search to find what you&apos;re looking for.</p>
-            </div>
-          }
-        </div>
+        <SearchArea />
       </div>
+
+      <hr />
 
       <Footer />
     </div>
