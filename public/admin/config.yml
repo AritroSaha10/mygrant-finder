@@ -12,7 +12,7 @@ media_folder: "public/images/uploads" # Media files will be stored in the repo u
 collections:
   - name: "grant" # Used in routes, e.g., /admin/collections/blog
     label: "Grants" # Used in the UI
-    label_singular: "Grants" # Used in the UI
+    label_singular: "Grant" # Used in the UI
     folder: "data/grants" # The path to the folder where the documents are stored
     identifier_field: name
     create: true # Allow users to create new documents in this collection
