@@ -17,7 +17,7 @@ function CustomRefinementList({ items, currentRefinement, refine, isFromSearch, 
     const [showDropdown, setShowDropdown] = useState(false);
 
     return (
-        <div className="py-2 px-4 bg-gray-200 rounded w-1/2 self-center">
+        <div className={`py-2 px-4 bg-gray-200 rounded w-1/2 self-center ${showDropdown && "ring-2"} ring-gray-300`}>
             <button className="w-full" onClick={() => setShowDropdown(!showDropdown)}>
                 <div className="flex justify-between items-center">
                     <span className="text-md text-gray-600 font-medium">Category</span>
@@ -28,7 +28,7 @@ function CustomRefinementList({ items, currentRefinement, refine, isFromSearch, 
                     }
                 </div>
             </button>
-            <div className={`${showDropdown ? "h-auto opacity-100" : "h-0 opacity-0"} duration-75`}>
+            <div className={`${showDropdown ? "block" : "hidden"}`}>
                 <ul>
                     {items.map(item => (
                         <li key={item.label}>
