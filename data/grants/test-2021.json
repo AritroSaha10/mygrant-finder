@@ -1,6 +1,7 @@
 {
   "dateCreated": "2021-08-18T02:40:43.739Z",
   "name": "Test",
+  "category": ["General"],
   "shortDescription": "test",
   "longDescription": "test",
   "img": "/images/uploads/maxresdefault.jpg",

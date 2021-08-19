@@ -2,6 +2,7 @@ import algoliasearch from "algoliasearch/lite";
 import { InstantSearch } from "react-instantsearch-dom";
 import SearchBox from "./SearchBox";
 import Results from "./Results";
+import RefinementList from "./RefinementList";
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
@@ -16,7 +17,9 @@ export default function Search() {
                 indexName="mygrants-grants">
                 <div className="flex-col self-center items-end gap-2 w-full md:w-2/3 lg:w-1/2">
                     <SearchBox />
+                    <RefinementList attribute="category" />
                 </div>
+
                 <Results />
 
             </InstantSearch>
