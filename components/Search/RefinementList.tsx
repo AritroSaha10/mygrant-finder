@@ -1,5 +1,5 @@
 import { connectRefinementList } from "react-instantsearch-dom";
-
+import Select from 'react-select';
 
 interface Props {
     items: any[];
@@ -10,23 +10,22 @@ interface Props {
     createURL: Function;
 }
 
+const options = [
+    'one', 'two', 'three'
+];
+const defaultOption = options[0];
+
+
+
 function CustomRefinementList({ items, currentRefinement, refine, isFromSearch, searchForItems, createURL }: Props) {
+    const customRefine = e => {
+        
+    }
+
+    console.log(currentRefinement);
+
     return (
-        <ul>
-            {items.map(item => (
-                <li key={item.label}>
-                    <a
-                        href="#"
-                        onClick={event => {
-                            event.preventDefault();
-                            refine(item.value);
-                        }}
-                    >
-                        {item.label} ({item.count})
-                    </a>
-                </li>
-            ))}
-        </ul>
+        <Select options={items} onChange={(e) => {refine(e.value); console.log(e)}} placeholder="Select an option" isClearable={true} />
     );
 }
 
