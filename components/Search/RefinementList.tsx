@@ -1,5 +1,8 @@
 import { connectRefinementList } from "react-instantsearch-dom";
 import Select from 'react-select';
+import RefinementItem from "./RefinementItem";
+import { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface Props {
     items: any[];
@@ -10,22 +13,31 @@ interface Props {
     createURL: Function;
 }
 
-const options = [
-    'one', 'two', 'three'
-];
-const defaultOption = options[0];
-
-
-
 function CustomRefinementList({ items, currentRefinement, refine, isFromSearch, searchForItems, createURL }: Props) {
-    const customRefine = e => {
-        
-    }
-
-    console.log(currentRefinement);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     return (
-        <Select options={items} onChange={(e) => {refine(e.value); console.log(e)}} placeholder="Select an option" isClearable={true} />
+        <div className="py-2 px-4 bg-gray-200 rounded w-1/2 self-center">
+            <button className="w-full" onClick={() => setShowDropdown(!showDropdown)}>
+                <div className="flex justify-between items-center">
+                    <span className="text-md text-gray-600 font-medium">Category</span>
+                    {showDropdown ?
+                        <IoIosArrowUp />
+                        :
+                        <IoIosArrowDown />
+                    }
+                </div>
+            </button>
+            <div className={`${showDropdown ? "h-auto opacity-100" : "h-0 opacity-0"} duration-75`}>
+                <ul>
+                    {items.map(item => (
+                        <li key={item.label}>
+                            <RefinementItem item={item} refine={refine} />
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
     );
 }
 

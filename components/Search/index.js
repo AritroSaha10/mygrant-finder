@@ -15,9 +15,14 @@ export default function Search() {
             <InstantSearch
                 searchClient={searchClient}
                 indexName="mygrants-grants">
-                <div className="flex-col self-center items-end gap-2 w-full md:w-2/3 lg:w-1/2">
+                <div className="flex flex-col self-center gap-2 w-full md:w-2/3 lg:w-1/2">
                     <SearchBox />
-                    <RefinementList attribute="category" />
+                    <RefinementList
+                        attribute="category"
+                        transformItems={items =>
+                            items.sort((a, b) => a.label.localeCompare(b.label))
+                        }
+                    />
                 </div>
 
                 <Results />
