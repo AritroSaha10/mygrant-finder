@@ -10,7 +10,7 @@ interface Props {
 
 export default function GrantPage(props: Props) {
     return (
-        <div className="bg-gray-50">
+        <div className="flex flex-col bg-gray-50 min-h-screen">
             <CustomHead pageName={props.name} />
 
             <Navbar />
