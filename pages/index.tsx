@@ -27,8 +27,6 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
     console.log(name);
     console.log(email);
 
@@ -66,7 +64,8 @@ export default function Home() {
         <div className="flex flex-col flex-grow justify-center items-center gap-4 p-10 min-w-screen">
           <h1 className="text-3xl font-bold">MyGrant Finder</h1>
           <p className="text-md text-gray-500">Submit your contact information to gain access to our grant finder!</p>
-          <form onSubmit={handleFormSubmit} className="flex flex-col gap-6" data-netlify="true">
+          <form onSubmit={handleFormSubmit} className="flex flex-col gap-6" data-netlify="true" method="POST">
+            <input type="hidden" name="form-name" value="contact" />
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex flex-col">
                 <label htmlFor="fullName">
