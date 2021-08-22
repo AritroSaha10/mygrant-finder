@@ -3,11 +3,7 @@ import React, { useState } from "react"
 import SearchArea from "../components/Search";
 
 import Layout from "../components/Layout";
-
-import requestIp from 'request-ip'
-
-import type { NextApiRequest, NextApiResponse } from 'next'
-
+import { useEffect } from "react";
 
 const encode = (data) => {
   return Object.keys(data)
@@ -15,10 +11,7 @@ const encode = (data) => {
     .join("&");
 }
 
-export default function Home(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req);
-  const detectedIp = requestIp.getClientIp(req);
-  console.log(detectedIp);
+export default function Home() {
 
   // const name = useRef<HTMLInputElement>();
   // const email = useRef<HTMLInputElement>();
@@ -46,6 +39,16 @@ export default function Home(req: NextApiRequest, res: NextApiResponse) {
 
     setSubmitted(true);
   }
+
+  useEffect(() => {
+    (async () => {
+      // Check with API and set data to this
+      const res = await fetch("/api/checkWhitelist");
+      const data = await res.json();
+      
+      setSubmitted(data.onWhitelist);
+    })();
+  }, []);
 
   return (
     <Layout name="Finder">
