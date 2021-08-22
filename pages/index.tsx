@@ -35,15 +35,15 @@ export default function Home() {
       email
     };
 
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", ...data })
-    })
-      .catch(error => {
-        console.log(error);
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...data })
       });
-
+    } catch (e) {
+      console.log(e);
+    }
 
     setSubmitted(true);
   }
@@ -80,6 +80,7 @@ export default function Home() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  name="name"
                 />
               </div>
 
@@ -97,6 +98,7 @@ export default function Home() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                 />
               </div>
             </div>
