@@ -1,17 +1,9 @@
-import Head from 'next/head'
-import { GetStaticProps } from 'next';
-import React, { useRef, useState } from "react"
-
-import Card from "../components/Card"
-import Navbar from '../components/Navbar'
-import Footer from "../components/Footer"
-
-import getAllGrants from "../util/getAllGrants";
-import getGrantInfo from "../util/getGrantInfo";
+import React, { useState } from "react"
 
 import SearchArea from "../components/Search";
 
 import Layout from "../components/Layout";
+import { useEffect } from "react";
 
 const encode = (data) => {
   return Object.keys(data)
@@ -20,6 +12,7 @@ const encode = (data) => {
 }
 
 export default function Home() {
+
   // const name = useRef<HTMLInputElement>();
   // const email = useRef<HTMLInputElement>();
   const [name, setName] = useState("");
@@ -46,6 +39,16 @@ export default function Home() {
 
     setSubmitted(true);
   }
+
+  useEffect(() => {
+    (async () => {
+      // Check with API and set data to this
+      const res = await fetch("/api/checkWhitelist");
+      const data = await res.json();
+      
+      setSubmitted(data.onWhitelist);
+    })();
+  }, []);
 
   return (
     <Layout name="Finder">
