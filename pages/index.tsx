@@ -27,8 +27,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(name);
-    console.log(email);
+    e.preventDefault();
 
     const data = {
       name,
@@ -39,7 +38,7 @@ export default function Home() {
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact", ...data })
+        body: encode({ "form-name": "contact-info", ...data })
       });
     } catch (e) {
       console.log(e);
@@ -64,15 +63,16 @@ export default function Home() {
         <div className="flex flex-col flex-grow justify-center items-center gap-4 p-10 min-w-screen">
           <h1 className="text-3xl font-bold">MyGrant Finder</h1>
           <p className="text-md text-gray-500">Submit your contact information to gain access to our grant finder!</p>
-          <form onSubmit={handleFormSubmit} className="flex flex-col gap-6" data-netlify="true" method="POST" name="contact-info">
-            <input type="hidden" name="form-name" value="contact-info" />
+
+          <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex flex-col">
                 <label htmlFor="fullName">
                   <span className="text-md text-gray-500">
-                    Full Name {/* <span className="text-red-500"> *</span> */}
+                    Full Name <span className="text-red-500"> *</span>
                   </span>
                 </label>
+
                 <input
                   type="text"
                   id="fullName"
@@ -81,13 +81,14 @@ export default function Home() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   name="name"
+                  placeholder="John Doe"
                 />
               </div>
 
               <div className="flex flex-col">
                 <label htmlFor="email">
                   <span className="text-md text-gray-500">
-                    Email {/* <span className="text-red-500"> *</span> */}
+                    Email <span className="text-red-500"> *</span>
                   </span>
                 </label>
 
@@ -99,6 +100,7 @@ export default function Home() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   name="email"
+                  placeholder="john@example.com"
                 />
               </div>
             </div>
