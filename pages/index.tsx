@@ -93,7 +93,7 @@ export default function Home() {
                 </label>
 
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   className="bg-gray-200 appearance-none outline-none px-4 py-1 rounded focus:ring focus:bg-gray-300 duration-75 w-full"
                   required
