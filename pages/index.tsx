@@ -65,12 +65,12 @@ export default function Home() {
           <h1 className="text-3xl font-bold">MyGrant Finder</h1>
           <p className="text-md text-gray-500">Submit your contact information to gain access to our grant finder!</p>
           <form onSubmit={handleFormSubmit} className="flex flex-col gap-6" data-netlify="true" method="POST" name="contact-info">
-            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="form-name" value="contact-info" />
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex flex-col">
                 <label htmlFor="fullName">
                   <span className="text-md text-gray-500">
-                    Full Name <span className="text-red-500"> *</span>
+                    Full Name {/* <span className="text-red-500"> *</span> */}
                   </span>
                 </label>
                 <input
@@ -87,7 +87,7 @@ export default function Home() {
               <div className="flex flex-col">
                 <label htmlFor="email">
                   <span className="text-md text-gray-500">
-                    Email <span className="text-red-500"> *</span>
+                    Email {/* <span className="text-red-500"> *</span> */}
                   </span>
                 </label>
 
