@@ -1,17 +1,13 @@
-import Head from 'next/head'
-import { GetStaticProps } from 'next';
-import React, { useRef, useState } from "react"
-
-import Card from "../components/Card"
-import Navbar from '../components/Navbar'
-import Footer from "../components/Footer"
-
-import getAllGrants from "../util/getAllGrants";
-import getGrantInfo from "../util/getGrantInfo";
+import React, { useState } from "react"
 
 import SearchArea from "../components/Search";
 
 import Layout from "../components/Layout";
+
+import requestIp from 'request-ip'
+
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 
 const encode = (data) => {
   return Object.keys(data)
@@ -19,7 +15,11 @@ const encode = (data) => {
     .join("&");
 }
 
-export default function Home() {
+export default function Home(req: NextApiRequest, res: NextApiResponse) {
+  console.log(req);
+  const detectedIp = requestIp.getClientIp(req);
+  console.log(detectedIp);
+
   // const name = useRef<HTMLInputElement>();
   // const email = useRef<HTMLInputElement>();
   const [name, setName] = useState("");
@@ -93,7 +93,7 @@ export default function Home() {
                 </label>
 
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   className="bg-gray-200 appearance-none outline-none px-4 py-1 rounded focus:ring focus:bg-gray-300 duration-75 w-full"
                   required
