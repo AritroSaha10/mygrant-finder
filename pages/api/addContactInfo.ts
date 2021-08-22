@@ -9,5 +9,7 @@ export default async function CheckWhitelist(req: NextApiRequest, res: NextApiRe
     const ip = req.headers["x-nf-client-connection-ip"]; // Only works for netlify
     console.log(req.body);
 
+    // TODO: Add later before Zappier trial finishes
+
     res.status(200).write("200 OK");
 }
