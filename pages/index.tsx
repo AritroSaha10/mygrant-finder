@@ -6,6 +6,8 @@ import Layout from "../components/Layout";
 import { useEffect } from "react";
 import MainSkeletonPage from "../components/MainSkeletonPage";
 
+import { useCookies } from "react-cookie";
+
 const encode = (data: Object) => {
   return Object.keys(data)
     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
@@ -17,6 +19,8 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['submitted-contact-info']);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,20 +41,27 @@ export default function Home() {
     }
 
     setSubmitted(true);
+    setCookie("submitted-contact-info", true);
   }
 
   useEffect(() => {
     (async () => {
-      // Check with API and set data to this
-      const res = await fetch("/api/checkWhitelist");
-      const data = await res.json();
+      // Only run API check if no cookies
+      if (cookies["submitted-contact-info"] !== "true") {
+        // Check with API and set data to this
+        const res = await fetch("/api/checkWhitelist");
+        const data = await res.json();
 
-      setSubmitted(data.onWhitelist);
+        setSubmitted(data.onWhitelist);
 
-      // Wait for a tiny bit to remove the blinking effect
-      setTimeout(() => setLoaded(true), 100);
+        // Wait for a tiny bit to remove the blinking effect
+        setTimeout(() => setLoaded(true), 250);
+      } else {
+        setSubmitted(true);
+        setLoaded(true);
+      }
     })();
-  }, []);
+  }, [cookies]);
 
   return (
     <Layout name="Finder">
