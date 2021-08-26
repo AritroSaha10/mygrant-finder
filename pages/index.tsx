@@ -47,8 +47,8 @@ export default function Home() {
 
       setSubmitted(data.onWhitelist);
 
-      // Wait for like half a second to remove the blinking effect
-      setTimeout(() => setLoaded(true), 500);
+      // Wait for a tiny bit to remove the blinking effect
+      setTimeout(() => setLoaded(true), 100);
     })();
   }, []);
 
