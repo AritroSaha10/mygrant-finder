@@ -18,10 +18,9 @@ module.exports = async function getAllGrantsAirtable() {
         category: grant.get("Category") ? grant.get("Category") : "None",
         source: grant.get("Source") ? grant.get("Source") : "Unknown",
         notes: grant.get("Notes") ? grant.get("Notes") : "There seem to be no notes...",
-        link: grant.get("Link")
+        link: grant.get("Link"),
+        objectID: grant.getId()
     }));
-
-    console.log(grants);
 
     return grants;
 }

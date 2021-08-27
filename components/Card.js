@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 import dayjs from 'dayjs';
 
-export default function Card({ title, image, subtitle, dateCreated, href }) {
-    const dateCreatedPreparedString = dayjs(dateCreated).format("DD/MM/YYYY");
+export default function Card({ title, image, subtitle, tag, href }) {
+    // const dateCreatedPreparedString = dayjs(dateCreated).format("DD/MM/YYYY");
 
     return (
         <div className="flex flex-col md:flex-row md:justify-start gap-4 rounded-lg bg-gray-200 p-2 lg:p-6 duration-300">
@@ -14,7 +14,7 @@ export default function Card({ title, image, subtitle, dateCreated, href }) {
                     <div>
                         <h1 className="text-xl text-black text-center md:text-left font-semibold">{title}</h1>
                         <h2 className="text-md text-left text-center md:text-left text-gray-500">
-                            {dateCreatedPreparedString}
+                            {tag}
                         </h2>
                     </div>
                 </div>

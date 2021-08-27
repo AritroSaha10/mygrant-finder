@@ -5,6 +5,8 @@ import Image from 'next/image';
 import marked from 'marked';
 import getAllGrants from '../../util/getAllGrants';
 import getGrantInfo from '../../util/getGrantInfo';
+import getAllGrantsAirtable from '../../util/getAllGrantsAirtable';
+
 
 import Grant from "../../components/GrantType";
 import Layout from "../../components/Layout";
@@ -14,11 +16,13 @@ import dayjs from 'dayjs';
 import markdownCSS from "../../styles/markdown.module.css";
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-    const allGrantsRaw = await getAllGrants();
+    const allGrantsRaw = await getAllGrantsAirtable();
 
-    const allGrants = allGrantsRaw.map((fname) => ({
+    console.log(allGrantsRaw);
+
+    const allGrants = allGrantsRaw.map(({ objectID }) => ({
         params: {
-            grant: fname.toString()
+            grant: objectID.toString()
         }
     }));
 
@@ -32,9 +36,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     let grantInfo = await getGrantInfo(context.params.grant);
 
     // Parse markdown in description
-    const descriptionMarked = marked(grantInfo.longDescription);
+    const descriptionMarked = marked(grantInfo.notes);
 
-    grantInfo.longDescription = descriptionMarked;
+    grantInfo.notes = descriptionMarked;
 
     return {
         props: {
@@ -48,8 +52,6 @@ interface Props {
 }
 
 export default function GrantPage({ grantInfo }: Props) {
-    const dateCreatedPreparedString = dayjs(grantInfo.dateCreated).format("DD/MM/YYYY");
-
     return (
         <Layout name={grantInfo.name}>
             <div className="min-h-screen min-w-screen">
@@ -61,17 +63,16 @@ export default function GrantPage({ grantInfo }: Props) {
                 </header>
 
                 <div className="flex flex-col lg:flex-row px-10 py-2 lg:px-20 lg:py-4 xl:px-60 xl:py-10 items-center">
-                    <Image src={grantInfo.img} className="w-1/5 rounded-md" alt="Featured image" height={500} width={400} objectPosition="center" objectFit="cover" />
                     <div className="lg:ml-5 flex flex-col w-4/5 items-center lg:items-start">
                         <h1 className="text-black text-4xl font-semibold text-center">{grantInfo.name}</h1>
-                        <h3 className="text-gray-500 text-md text-center">{dateCreatedPreparedString}</h3>
+                        <h3 className="text-gray-500 text-md text-center">Category: {grantInfo.category}</h3>
 
                         <br />
 
                         {/* This makes sure that all external links in the description open another tab */}
                         <base target="_blank" />
 
-                        <div className={` ${markdownCSS.markdown}`} dangerouslySetInnerHTML={{ __html: grantInfo.longDescription }} />
+                        <div className={` ${markdownCSS.markdown}`} dangerouslySetInnerHTML={{ __html: grantInfo.notes }} />
                     </div>
                 </div>
 

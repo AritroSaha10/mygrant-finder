@@ -3,6 +3,8 @@ import Card from "../../components/Card";
 
 import Grant from "../GrantType";
 
+import Placeholder from "../../public/images/placeholder.png";
+
 function Results({ searchState, searchResults }) {
     const results: Grant[] | null = searchResults ? searchResults.hits : null; // If search results exists, get the results. Otherwise, null
 
@@ -11,13 +13,13 @@ function Results({ searchState, searchResults }) {
             <div className="flex flex-col gap-4">
                 {results ?
                     // Results is not null, show results if any
-                    (results.length ? results.map(({ name, shortDescription, img, dateCreated, objectID }, idx: Number) => (
+                    (results.length ? results.map(({ name, category, source, notes, link, objectID }, idx: Number) => (
                         <Card 
                             title={name} 
-                            image={img} 
-                            subtitle={shortDescription} 
-                            dateCreated={dateCreated} 
-                            href={`/grants/${objectID}`} 
+                            image={Placeholder} 
+                            subtitle={notes} 
+                            tag={category} 
+                            href={link} 
                             key={idx.toString()} 
                         />
                     )) :
