@@ -22,10 +22,10 @@ export default function Card({ title, image, subtitle, tag, href }) {
                 <p className="break-words text-center md:text-left">
                     {subtitle}
                 </p>
-
-                <Link href={href} key={href} passHref>
+                
+                <a href={href} key={href} passHref target="_blank" rel="noreferrer">
                     <button className="text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold w-24 h-8 rounded duration-300 mt-2">View More</button>
-                </Link>
+                </a>
             </div>
         </div>
     );

@@ -3,10 +3,8 @@ import Link from "next/link";
 import Image from 'next/image';
 
 import marked from 'marked';
-import getAllGrants from '../../util/getAllGrants';
-import getGrantInfo from '../../util/getGrantInfo';
 import getAllGrantsAirtable from '../../util/getAllGrantsAirtable';
-
+import getGrantInfoAirtable from "../../util/getGrantInfoAirtable";
 
 import Grant from "../../components/GrantType";
 import Layout from "../../components/Layout";
@@ -17,8 +15,6 @@ import markdownCSS from "../../styles/markdown.module.css";
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
     const allGrantsRaw = await getAllGrantsAirtable();
-
-    console.log(allGrantsRaw);
 
     const allGrants = allGrantsRaw.map(({ objectID }) => ({
         params: {
@@ -33,9 +29,10 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    let grantInfo = await getGrantInfo(context.params.grant);
+    let grantInfo = await getGrantInfoAirtable(context.params.grant);
 
     // Parse markdown in description
+    // @ts-ignore Weird typechecking here
     const descriptionMarked = marked(grantInfo.notes);
 
     grantInfo.notes = descriptionMarked;
