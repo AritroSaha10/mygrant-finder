@@ -5,24 +5,8 @@
 const dotenv = require("dotenv");
 const algoliaSearch = require("algoliasearch/lite");
 
-// Data fetching 
-const getAllGrants = require("../util/getAllGrants");
-const getGrantInfo = require("../util/getGrantInfo");
-
-async function getAllGrantData() {
-    // Get all of the grant IDs
-    const grantsIDs = await getAllGrants();
-
-    // Get all of their info
-    const allGrantsInfo = grantsIDs.map(
-        async (id) => ({
-            ...(await getGrantInfo(id)),
-            objectID: id // Important for algolia
-        })
-    );
-
-    return Promise.all(allGrantsInfo);
-}
+// Data fetching
+const getAllGrantsAirtable = require("../util/getAllGrantsAirtable");
 
 // IIFE to use await
 (async function () {
@@ -33,7 +17,7 @@ async function getAllGrantData() {
         console.log("Pushing grant data to Algolia...");
 
         // Fetch data
-        const allGrants = await getAllGrantData();
+        const allGrants = await getAllGrantsAirtable();
         
         // Init Algolia client
         const client = algoliaSearch(
@@ -42,7 +26,7 @@ async function getAllGrantData() {
         );
 
         // Save fetched data to algolia
-        const index = client.initIndex("mygrants-grants");
+        const index = client.initIndex("mygrants-grants-airtable");
         const algoliaResponse = await index.saveObjects(allGrants);
 
         console.log(
