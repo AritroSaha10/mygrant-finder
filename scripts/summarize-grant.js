@@ -53,7 +53,12 @@ async function getAllGrantsAirtable() {
                 method: "POST",
             })
 
-            data = await res.json();
+            try {
+                data = await res.json();
+            } catch (e) {
+                console.log("❌ Error when converting data to JSON: ", e);
+                return;
+            }
 
             // Check data if everything went well
             if ("sm_api_error" in data) {
