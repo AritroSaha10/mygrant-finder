@@ -17,6 +17,7 @@ module.exports = async function getAllGrantsAirtable(id) {
         source: grantRaw.get("Source") ? grantRaw.get("Source") : "Unknown",
         notes: grantRaw.get("Notes") ? grantRaw.get("Notes") : "There seem to be no notes...",
         link: grantRaw.get("Link"),
+        description: grantRaw.get("Description"),
         objectID: grantRaw.getId()
     };
 
