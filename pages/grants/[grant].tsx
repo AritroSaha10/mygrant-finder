@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from "next/link";
-import Image from 'next/image';
+// import Image from 'next/image';
 
 import marked from 'marked';
 import getAllGrantsAirtable from '../../util/getAllGrantsAirtable';
@@ -8,8 +8,6 @@ import getGrantInfoAirtable from "../../util/getGrantInfoAirtable";
 
 import Grant from "../../components/GrantType";
 import Layout from "../../components/Layout";
-
-import dayjs from 'dayjs';
 
 import markdownCSS from "../../styles/markdown.module.css";
 import { RiExternalLinkFill } from "react-icons/ri";
