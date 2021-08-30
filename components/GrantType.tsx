@@ -1,10 +1,11 @@
 type Grant = {
     name: string,
-    shortDescription: string,
-    longDescription: string,
-    keywords: string[],
-    dateCreated: string,
-    img: string,
+    category: string,
+    source: string,
+    notes: string,
+    link: string,
+    description: string,
+    keywords: string | string[],
     objectID: string
 }
 

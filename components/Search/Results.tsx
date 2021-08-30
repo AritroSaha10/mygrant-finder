@@ -3,22 +3,36 @@ import Card from "../../components/Card";
 
 import Grant from "../GrantType";
 
+import Placeholder from "../../public/images/placeholder.png";
+
 function Results({ searchState, searchResults }) {
-    const results: Grant[] | null = searchResults ? searchResults.hits : null; // If search results exists, get the results. Otherwise, null
+    let results: Grant[] | null = searchResults ? searchResults.hits : null; // If search results exists, get the results. Otherwise, null
+
+    if (results) {
+        // Edit descriptions to either trim or make sure it has some content
+        results.forEach(({ description }, i) => {
+            // No char check and max char limit
+            if (!description) {
+                results[i].description = "There seems to be no description...";
+            } else if (description.length > 300) {
+                results[i].description = description.slice(0, 300) + "...";
+            }
+        });
+    }
 
     return (
         <div className="p-4 mb-4">
             <div className="flex flex-col gap-4">
                 {results ?
                     // Results is not null, show results if any
-                    (results.length ? results.map(({ name, shortDescription, img, dateCreated, objectID }, idx: Number) => (
-                        <Card 
-                            title={name} 
-                            image={img} 
-                            subtitle={shortDescription} 
-                            dateCreated={dateCreated} 
-                            href={`/grants/${objectID}`} 
-                            key={idx.toString()} 
+                    (results.length ? results.map(({ name, category, source, description, link, objectID }, idx: Number) => (
+                        <Card
+                            title={name}
+                            image={Placeholder}
+                            subtitle={description}
+                            tag={`${category} | ${source}`}
+                            href={`/grants/${objectID}`}
+                            key={objectID}
                         />
                     )) :
                         // No results found

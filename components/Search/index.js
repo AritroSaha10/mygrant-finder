@@ -14,7 +14,7 @@ export default function Search() {
         <>
             <InstantSearch
                 searchClient={searchClient}
-                indexName="mygrants-grants">
+                indexName="mygrants-grants-airtable">
                 <div className="flex flex-col self-center gap-2 w-full md:w-2/3 lg:w-1/2">
                     <SearchBox />
                     <RefinementList
