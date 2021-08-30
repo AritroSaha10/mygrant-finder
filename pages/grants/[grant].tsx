@@ -12,6 +12,7 @@ import Layout from "../../components/Layout";
 import dayjs from 'dayjs';
 
 import markdownCSS from "../../styles/markdown.module.css";
+import { RiExternalLinkFill } from "react-icons/ri";
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
     const allGrantsRaw = await getAllGrantsAirtable();
@@ -31,11 +32,14 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     let grantInfo = await getGrantInfoAirtable(context.params.grant);
 
-    // Parse markdown in description
-    // @ts-ignore Weird typechecking here
-    const descriptionMarked = marked(grantInfo.notes);
-
-    grantInfo.notes = descriptionMarked;
+    if (grantInfo.description) {
+        // Parse markdown in description
+        // @ts-ignore Weird typechecking here
+        const descriptionMarked = marked(grantInfo.description);
+        grantInfo.description = descriptionMarked;
+    } else {
+        grantInfo.description = "There seems to be no description. Try clicking the 'Learn More' button for more information.";
+    }
 
     return {
         props: {
@@ -62,14 +66,25 @@ export default function GrantPage({ grantInfo }: Props) {
                 <div className="flex flex-col lg:flex-row px-10 py-2 lg:px-20 lg:py-4 xl:px-60 xl:py-10 items-center">
                     <div className="lg:ml-5 flex flex-col w-4/5 items-center lg:items-start">
                         <h1 className="text-black text-4xl font-semibold text-center">{grantInfo.name}</h1>
-                        <h3 className="text-gray-500 text-md text-center">Category: {grantInfo.category}</h3>
+                        <h3 className="text-gray-500 text-md text-center"></h3>
+                        <h3 className="text-gray-500 text-md text-center">
+                            <span>Source: {grantInfo.source}</span>
+                            {" "} | {" "}
+                            <span>Category: {grantInfo.category}</span>
+                        </h3>
 
                         <br />
 
                         {/* This makes sure that all external links in the description open another tab */}
                         <base target="_blank" />
 
-                        <div className={` ${markdownCSS.markdown}`} dangerouslySetInnerHTML={{ __html: grantInfo.notes }} />
+                        <div className={` ${markdownCSS.markdown}`} dangerouslySetInnerHTML={{ __html: grantInfo.description }} />
+
+                        <br />
+
+                        <a className="flex items-center gap-2 text-2xl text-blue-400 hover:underline focus:underline cursor-pointer" href={grantInfo.link} target="_blank" rel="noreferrer">
+                            <span>Learn More</span> <RiExternalLinkFill />
+                        </a>
                     </div>
                 </div>
 

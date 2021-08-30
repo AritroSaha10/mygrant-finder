@@ -4,6 +4,8 @@ type Grant = {
     source: string,
     notes: string,
     link: string,
+    description: string,
+    keywords: string | string[],
     objectID: string
 }
 
