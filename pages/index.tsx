@@ -52,7 +52,7 @@ export default function Home() {
         const res = await fetch("/api/checkWhitelist");
         const data = await res.json();
 
-        setSubmitted(true);
+        setSubmitted(data.onWhitelist);
 
         // Wait for a tiny bit to remove the blinking effect
         setTimeout(() => setLoaded(true), 250);
