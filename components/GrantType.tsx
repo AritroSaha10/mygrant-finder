@@ -6,6 +6,7 @@ type Grant = {
     link: string,
     description: string,
     keywords: string | string[],
+    img: string,
     objectID: string
 }
 

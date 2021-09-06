@@ -10,7 +10,7 @@ module.exports = async function getAllGrantsAirtable() {
     const grantsTable = base("Grants");
 
     const grantsRaw = await grantsTable.select({
-        fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords"]
+        fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"]
     }).all();
 
     const grants = grantsRaw.map((grant) => ({
@@ -21,6 +21,7 @@ module.exports = async function getAllGrantsAirtable() {
         link: grant.get("Link"),
         description: grant.get("Description"),
         keywords: grant.get("Keywords") ? grant.get("Keywords") : [],
+        img: grant.get("Image") ? grant.get("Image") : "/images/no-image-found.jpg",
         objectID: grant.getId()
     }));
 

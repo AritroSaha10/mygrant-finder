@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from "next/link";
-// import Image from 'next/image';
+import Image from 'next/image';
 
 import marked from 'marked';
 import getAllGrantsAirtable from '../../util/getAllGrantsAirtable';
@@ -62,6 +62,7 @@ export default function GrantPage({ grantInfo }: Props) {
                 </header>
 
                 <div className="flex flex-col lg:flex-row px-10 py-2 lg:px-20 lg:py-4 xl:px-60 xl:py-10 items-center">
+                    <Image src={grantInfo.img} className="w-1/5 rounded-md" alt="Featured image" height={500} width={400} objectPosition="center" objectFit="cover" />
                     <div className="lg:ml-5 flex flex-col w-4/5 items-center lg:items-start">
                         <h1 className="text-black text-4xl font-semibold text-center">{grantInfo.name}</h1>
                         <h3 className="text-gray-500 text-md text-center"></h3>

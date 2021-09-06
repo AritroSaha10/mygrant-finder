@@ -25,10 +25,10 @@ function Results({ searchState, searchResults }) {
             <div className="flex flex-col gap-4">
                 {results ?
                     // Results is not null, show results if any
-                    (results.length ? results.map(({ name, category, source, description, link, objectID }, idx: Number) => (
+                    (results.length ? results.map(({ name, category, source, description, link, objectID, img }, idx: Number) => (
                         <Card
                             title={name}
-                            image={Placeholder}
+                            image={img}
                             subtitle={description}
                             tag={`${category} | ${source}`}
                             href={`/grants/${objectID}`}
