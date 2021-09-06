@@ -21,7 +21,7 @@ module.exports = async function getAllGrantsAirtable() {
         link: grant.get("Link"),
         description: grant.get("Description"),
         keywords: grant.get("Keywords") ? grant.get("Keywords") : [],
-        img: grant.get("Image") ? grant.get("Image") : "/images/no-image-found.jpg",
+        img: grant.get("Image") ? grant.get("Image")[0].url : "", // Setting as none so we can sort later
         objectID: grant.getId()
     }));
 

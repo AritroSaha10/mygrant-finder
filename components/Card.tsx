@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import NoImageFound from '../public/images/no-image-found.jpg'
+
 export default function Card({ title, image, subtitle, tag, href }) {
     return (
         <div className="flex flex-col md:flex-row md:justify-start gap-4 rounded-lg bg-gray-200 p-2 lg:p-6 duration-300">
-            <Image src={image} className="rounded-lg z-10 bg-blue-200" alt={title} objectFit="cover" objectPosition="center" width={150} height={150} />
+            <Image src={image ? image : NoImageFound} className="rounded-lg z-10 bg-blue-200" alt={title} objectFit="cover" objectPosition="center" width={200} height={150} />
             <div className="flex flex-col items-center md:items-start gap-2 lg:gap-4 w-full">
                 <div className="flex flex-col-reverse md:flex-row justify-center md:justify-between w-full items-center gap-1 lg:gap-2">
                     <div>
