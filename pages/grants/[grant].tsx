@@ -15,7 +15,7 @@ import { RiExternalLinkFill } from "react-icons/ri";
 import NoImageFound from '../../public/images/no-image-found.jpg'
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-    const allGrantsRaw = await getAllGrantsAirtable();
+    const allGrantsRaw = await getAllGrantsAirtable(100);
 
     const allGrants = allGrantsRaw.map(({ objectID }) => ({
         params: {
@@ -25,7 +25,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
     return {
         paths: allGrants,
-        fallback: false
+        fallback: "blocking"
     };
 }
 
@@ -44,7 +44,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props: {
             grantInfo
-        }
+        },
+        revalidate: 5
     }
 }
 

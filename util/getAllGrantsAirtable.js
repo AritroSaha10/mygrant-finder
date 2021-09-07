@@ -5,13 +5,22 @@
 
 const Airtable = require("airtable");
 
-module.exports = async function getAllGrantsAirtable() {
+module.exports = async function getAllGrantsAirtable(maxEntries) {
     const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("appZvaxaDZfU6f4fE");
     const grantsTable = base("Grants");
 
-    const grantsRaw = await grantsTable.select({
-        fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"]
-    }).all();
+    let grantsRaw = [];
+
+    if (maxEntries) {
+        grantsRaw = await grantsTable.select({
+            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"],
+            maxRecords: maxEntries
+        }).all();
+    } else {
+        grantsRaw = await grantsTable.select({
+            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"]
+        }).all();
+    }
 
     const grants = grantsRaw.map((grant) => ({
         name: grant.get("Name"),
