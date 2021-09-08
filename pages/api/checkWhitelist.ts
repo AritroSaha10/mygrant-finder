@@ -1,34 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import admin from "../../util/firebase/admin"
+import Airtable from 'airtable'
 
 type Data = {
     onWhitelist: boolean
 }
 
 export default async function CheckWhitelist(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const ip = req.headers["x-nf-client-connection-ip"]; // Only works for netlify
+    const ip = req.headers["x-real-ip"]; // Works on Vercel
     let data: Data = {
         onWhitelist: false
     };
 
     if (ip) {
-        // Check Firestore for IPs
-        const contactRef = admin.firestore().collection("contact-info");
-        const query = contactRef.where("ip", "==", ip);
+        const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("appZvaxaDZfU6f4fE");
+        const contactInfoTable = base("Contact Info");
 
-        const BreakException = {};
-        try {
-            // Set data whitelist to true if there's a doc
-            const querySnapshot = await query.get();
-            querySnapshot.forEach((doc) => {
-                data.onWhitelist = true;
-                throw BreakException;
-            });
-        } catch (e) {
-            if (e !== BreakException) {
-                console.log("Error executing query: ", e);
-            }
-        }
+        // Get all entries with the requested IP
+        const contactSearch = await contactInfoTable.select({
+            maxRecords: 1,
+            filterByFormula: `({IP} = '${ip}')`
+        }).all();
+
+        // If there's one entry of the IP, that means that the person has used the site before
+        data.onWhitelist = contactSearch.length > 0;
     }
 
     res.status(200).json(data);

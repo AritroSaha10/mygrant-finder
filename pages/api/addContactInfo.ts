@@ -1,15 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import admin from "../../util/firebase/admin"
+import Airtable from 'airtable'
 
 type Data = {
     onWhitelist: boolean
 }
 
 export default async function CheckWhitelist(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const ip = req.headers["x-nf-client-connection-ip"]; // Only works for netlify
+    const ip = req.headers["x-real-ip"]; // Works for Vercel
     console.log(req.body);
 
-    // TODO: Add later before Zappier trial finishes
+    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("appZvaxaDZfU6f4fE");
+    const contactInfoTable = base("Contact Info");
 
-    res.status(200).write("200 OK");
+    try {
+        contactInfoTable.create([
+            {
+                fields: {
+                    "Timestamp": new Date().toISOString(),
+                    "Full Name": req.body.name,
+                    "Email": req.body.email,
+                    "IP": ip
+                }
+            }
+        ]);
+
+        res.status(200).write("200 OK");
+    } catch (e) {
+        console.log(e);
+        res.status(500).write("500 Internal Server Error");
+    }
 }

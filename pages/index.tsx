@@ -31,10 +31,10 @@ export default function Home() {
     };
 
     try {
-      await fetch("/", {
+      await fetch("/api/addContactInfo", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact-info", ...data })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
       });
     } catch (e) {
       console.log(e);
