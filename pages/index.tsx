@@ -7,12 +7,7 @@ import { useEffect } from "react";
 import MainSkeletonPage from "../components/MainSkeletonPage";
 
 import { useCookies } from "react-cookie";
-
-const encode = (data: Object) => {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-}
+import axios from "axios";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -31,11 +26,7 @@ export default function Home() {
     };
 
     try {
-      await fetch("/api/addContactInfo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+      await axios.post("/api/addContactInfo", data);
     } catch (e) {
       console.log(e);
     }

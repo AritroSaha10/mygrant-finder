@@ -1,13 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Airtable from 'airtable'
 
-type Data = {
-    onWhitelist: boolean
-}
-
-export default async function CheckWhitelist(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function CheckWhitelist(req: NextApiRequest, res: NextApiResponse) {
     const ip = req.headers["x-real-ip"]; // Works for Vercel
-    console.log(req.body);
 
     const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("appZvaxaDZfU6f4fE");
     const contactInfoTable = base("Contact Info");
@@ -23,10 +18,12 @@ export default async function CheckWhitelist(req: NextApiRequest, res: NextApiRe
                 }
             }
         ]);
-
-        res.status(200).write("200 OK");
     } catch (e) {
         console.log(e);
-        res.status(500).write("500 Internal Server Error");
+        res.status(500).json({ status: 500 });
+        return;
     }
+
+    res.status(200).json({ status: 200 });
+    return;
 }
