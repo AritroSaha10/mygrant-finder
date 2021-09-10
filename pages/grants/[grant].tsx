@@ -16,6 +16,8 @@ import NoImageFound from '../../public/images/no-image-found.jpg'
 import { useEffect } from 'react';
 import axios from 'axios';
 
+import { getPlaiceholder } from "plaiceholder";
+
 export const getStaticPaths: GetStaticPaths = async (context) => {
     const allGrantsRaw = await getAllGrantsAirtable(100);
 
@@ -43,9 +45,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
         grantInfo.description = "There seems to be no description. Try clicking the 'Learn More' button for more information.";
     }
 
+    const { css, img } = await getPlaiceholder(grantInfo.img);
+
     return {
         props: {
-            grantInfo
+            grantInfo,
+            css,
+            img
         },
         revalidate: 5
     }
@@ -53,9 +59,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 interface Props {
     grantInfo: Grant;
+    css: any;
+    img: any;
 }
 
-export default function GrantPage({ grantInfo }: Props) {
+export default function GrantPage({ grantInfo, css, img }: Props) {
     useEffect(() => {
         (async () => {
             // Add view to counter
@@ -76,7 +84,27 @@ export default function GrantPage({ grantInfo }: Props) {
                 </header>
 
                 <div className="flex flex-col lg:flex-row px-10 py-2 lg:px-20 lg:py-4 xl:px-60 xl:py-10 items-center">
-                    <Image src={grantInfo.img ? grantInfo.img : NoImageFound} className="w-1/5 rounded-md" alt="Featured image" height={500} width={500} objectPosition="center" objectFit="contain" />
+                    <div style={{ position: "relative", display: "block", overflow: "hidden" }}>
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                right: 0,
+                                bottom: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                transform: "scale(1.5)",
+                                filter: "blur(40px)",
+                                ...css,
+                            }}
+                        />
+                        <Image
+                            {...img}
+                        />
+
+                    </div>
+
                     <div className="lg:ml-5 flex flex-col w-4/5 items-center lg:items-start">
                         <h1 className="text-black text-4xl font-semibold text-center">{grantInfo.name}</h1>
                         <h3 className="text-gray-500 text-md text-center"></h3>
