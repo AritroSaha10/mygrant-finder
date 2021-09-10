@@ -13,12 +13,12 @@ module.exports = async function getAllGrantsAirtable(maxEntries) {
 
     if (maxEntries) {
         grantsRaw = await grantsTable.select({
-            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"],
+            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image", "Views"],
             maxRecords: maxEntries
         }).all();
     } else {
         grantsRaw = await grantsTable.select({
-            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image"]
+            fields: ["Name", "Category", "Source", "Country", "Notes", "Link", "Description", "Keywords", "Image", "Views"]
         }).all();
     }
 
@@ -31,6 +31,7 @@ module.exports = async function getAllGrantsAirtable(maxEntries) {
         description: grant.get("Description"),
         keywords: grant.get("Keywords") ? grant.get("Keywords") : [],
         img: grant.get("Image") ? grant.get("Image")[0].url : "", // Setting as none so we can sort later
+        views: grant.get("Views"),
         objectID: grant.getId()
     }));
 

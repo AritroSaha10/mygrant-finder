@@ -19,6 +19,7 @@ module.exports = async function getAllGrantsAirtable(id) {
         link: grantRaw.get("Link"),
         description: grantRaw.get("Description"),
         img: grantRaw.get("Image") ? grantRaw.get("Image")[0].url : "/images/no-image-found.jpg",
+        views: grantRaw.get("Views"),
         objectID: grantRaw.getId()
     };
 
