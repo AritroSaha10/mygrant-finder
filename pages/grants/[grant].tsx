@@ -13,6 +13,8 @@ import markdownCSS from "../../styles/markdown.module.css";
 import { RiExternalLinkFill } from "react-icons/ri";
 
 import NoImageFound from '../../public/images/no-image-found.jpg'
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
     const allGrantsRaw = await getAllGrantsAirtable(100);
@@ -54,6 +56,15 @@ interface Props {
 }
 
 export default function GrantPage({ grantInfo }: Props) {
+    useEffect(() => {
+        (async () => {
+            // Add view to counter
+            await axios.post("/api/addView", {
+                id: grantInfo.objectID
+            });
+        })();
+    }, [grantInfo.objectID]);
+
     return (
         <Layout name={grantInfo.name}>
             <div className="min-h-screen min-w-screen">
