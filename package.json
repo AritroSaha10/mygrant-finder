@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.15.0",
+    "@plaiceholder/next": "^2.1.0",
     "@types/airtable": "^0.10.1",
     "airtable": "^0.11.1",
     "algoliasearch": "^4.10.3",
