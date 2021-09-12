@@ -1,8 +1,13 @@
+import React from "react";
 import { connectSearchBox } from "react-instantsearch-dom";
 
 function SearchBox({ refine }) {
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form action="" role="search">
+    <form action="" role="search" onSubmit={onSubmit}>
       <div className="flex flex-col gap-1 flex-grow">
         <label htmlFor="search">
           <p className="text-sm text-gray-500 font-semibold">
