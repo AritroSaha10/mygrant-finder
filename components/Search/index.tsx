@@ -1,5 +1,5 @@
 import algoliasearch from "algoliasearch/lite";
-import { InstantSearch, PoweredBy } from "react-instantsearch-dom";
+import { InstantSearch } from "react-instantsearch-dom";
 import SearchBox from "./SearchBox";
 import Results from "./Results";
 import RefinementList from "./RefinementList";
@@ -23,9 +23,6 @@ export default function Search() {
                             items.sort((a, b) => a.label.localeCompare(b.label))
                         }
                     />
-                    <div className="self-center">
-                        <PoweredBy />
-                    </div>
                 </div>
 
                 <Results />
