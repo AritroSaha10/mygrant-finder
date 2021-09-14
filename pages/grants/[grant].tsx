@@ -96,7 +96,7 @@ export default function GrantPage({ grantInfo }: Props) {
                         <br />
 
                         <a className="flex items-center gap-2 text-2xl text-blue-400 hover:underline focus:underline cursor-pointer" href={grantInfo.link} target="_blank" rel="noreferrer">
-                            <span>Learn More</span> <RiExternalLinkFill />
+                            <span>Apply Now</span> <RiExternalLinkFill />
                         </a>
                     </div>
                 </div>
