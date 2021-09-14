@@ -10,7 +10,7 @@ import Grant from "../../components/GrantType";
 import Layout from "../../components/Layout";
 
 import markdownCSS from "../../styles/markdown.module.css";
-import { RiExternalLinkFill } from "react-icons/ri";
+import { RiExternalLinkFill, RiLinksFill, RiLinksLine } from "react-icons/ri";
 
 import NoImageFound from '../../public/images/no-image-found.jpg'
 import { useEffect } from 'react';
@@ -98,6 +98,19 @@ export default function GrantPage({ grantInfo }: Props) {
                         <a className="flex items-center gap-2 text-2xl text-blue-400 hover:underline focus:underline cursor-pointer" href={grantInfo.link} target="_blank" rel="noreferrer">
                             <span>Apply Now</span> <RiExternalLinkFill />
                         </a>
+
+                        <br />
+                        <br />
+
+                        <div className="text-md p-8 ring-2 rounded-lg ring-green-500 bg-green-50">
+                            <p>
+                                Need more help with discovering grants, translation, or applications?
+                                Schedule a free call with our volunteers!
+                            </p>
+                            <a className="flex items-center gap-2 text-green-500 hover:underline" href="https://calendly.com/mygrant/onboarding" target="_blank" rel="noreferrer">
+                                <RiLinksLine /> <span>Book Now</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
