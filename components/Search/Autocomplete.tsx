@@ -1,6 +1,13 @@
 import { connectAutoComplete } from "react-instantsearch-core";
+import Grant from "../GrantType";
 
-function Autocomplete({ hits, currentRefinement, refine }) {
+type Props = {
+    hits: Grant[];
+    currentRefinement: string;
+    refine: Function;
+}
+
+function Autocomplete({ hits, currentRefinement, refine }: Props) {
     const autocompleteBoldingRange = (hit: string) => {
         // Get the string with the smallest length
         const smallestStringLength = currentRefinement.length > hit.length ? hit.length : currentRefinement.length;
@@ -16,6 +23,11 @@ function Autocomplete({ hits, currentRefinement, refine }) {
 
         return boldCount;
     };
+
+    // Only keep a max of 5 results
+    if (hits.length > 5) {
+        hits.splice(5);
+    }
 
     return (
         <ul className={hits.length && `flex flex-col gap-2 bg-white my-2 rounded-lg`}>
