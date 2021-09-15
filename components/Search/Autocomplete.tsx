@@ -18,9 +18,9 @@ function Autocomplete({ hits, currentRefinement, refine }) {
     };
 
     return (
-        <ul className={hits.length && `flex flex-col gap-2 bg-white mt-2 rounded-lg`}>
+        <ul className={hits.length && `flex flex-col gap-2 bg-white my-2 rounded-lg`}>
             {hits.map(hit => (
-                <li key={hit.objectID} onClick={() => refine(hit.name)} className="hover:bg-gray-100 px-4 py-1">
+                <li key={hit.objectID} onClick={() => refine(hit.name)} className="hover:bg-gray-100 px-4 py-1 cursor-pointer">
                     <span>
                         {hit.name.slice(0, autocompleteBoldingRange(hit.name))}
                     </span>
