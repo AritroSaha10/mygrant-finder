@@ -14,7 +14,11 @@ export default async function CheckWhitelist(req: NextApiRequest, res: NextApiRe
                     "Timestamp": new Date().toISOString(),
                     "Full Name": req.body.name,
                     "Email": req.body.email,
-                    "IP": ip
+                    "IP": ip,
+                    "Employee Count": req.body.businessEmployeeCount || "Unknown",
+                    "Sector": req.body.businessSector || "Unknown",
+                    "Funding Reason": req.body.businessFunding || "Unknown",
+                    "Operational Reach": req.body.businessLocation || "Unknown"
                 }
             }
         ]);
